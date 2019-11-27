@@ -34,28 +34,26 @@ void GraphBuilderFromFileOutput::build(OutputGraph &vrtx, const unsigned long &r
     if (vrtx->m_Parent != nullptr && (row == 0 || row == m_Maze->size()-1 || column == 0 || column == m_Maze->at(row).size()-1 )) {
         vrtx->m_IsExit = true;
     }
-    else {
-        m_Maze->at(row).at(column) = 1;
+    m_Maze->at(row).at(column) = 1;
 
-        if (checkCoordinates(row - 1, column)) {
-            vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row - 1, column}, vrtx->shared_from_this()));
-            build(vrtx->m_Vertices.back(), row - 1, column);
-        }
+    if (checkCoordinates(row - 1, column)) {
+        vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row - 1, column}, vrtx->shared_from_this()));
+        build(vrtx->m_Vertices.back(), row - 1, column);
+    }
 
-        if (checkCoordinates(row + 1, column)) {
-            vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row + 1, column}, vrtx->shared_from_this()));
-            build(vrtx->m_Vertices.back(), row + 1, column);
-        }
+    if (checkCoordinates(row + 1, column)) {
+        vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row + 1, column}, vrtx->shared_from_this()));
+        build(vrtx->m_Vertices.back(), row + 1, column);
+    }
 
-        if (checkCoordinates(row, column - 1)) {
-            vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row, column - 1}, vrtx->shared_from_this()));
-            build(vrtx->m_Vertices.back(), row, column - 1);
-        }
+    if (checkCoordinates(row, column - 1)) {
+        vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row, column - 1}, vrtx->shared_from_this()));
+        build(vrtx->m_Vertices.back(), row, column - 1);
+    }
 
-        if (checkCoordinates(row, column + 1)) {
-            vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row, column + 1}, vrtx->shared_from_this()));
-            build(vrtx->m_Vertices.back(), row, column + 1);
-        }
+    if (checkCoordinates(row, column + 1)) {
+        vrtx->m_Vertices.push_back(std::make_shared<graphunits::Vertex>(Coordinates{row, column + 1}, vrtx->shared_from_this()));
+        build(vrtx->m_Vertices.back(), row, column + 1);
     }
 }
 
